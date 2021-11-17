@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="VariabledComparer.Tab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="Control"
+             d:Background="LimeGreen"
+             d:DesignWidth="300"
+             d:DesignHeight="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="3*" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="FileNameDisplay"
+                 d:Text="FileName.ext"
+                 FontWeight="Bold"
+                 TextWrapping="Wrap"
+                 IsReadOnly="True"
+                 Background="Transparent"
+                 VerticalContentAlignment="Center" />
+        <TextBox x:Name="FileContentDisplay"
+                 d:Text="Lorem Ipsum dolor sit amet..."
+                 TextWrapping="Wrap"
+                 IsReadOnly="True"
+                 IsReadOnlyCaretVisible="True"
+                 Grid.Row="1" />
+        <!-- HACK: Width is bound because HorizontalAlignment=Strech doesn't work -->
+        <GridSplitter Height="2"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom"
+                      Width="{Binding Control.Width}"
+                      ResizeDirection="Rows"
+                      Grid.Row="1" />
+        <TextBox x:Name="RegexPatternDisplay"
+                 d:Text="Lorem Ipsum dolor sit amet..."
+                 TextWrapping="Wrap"
+                 IsReadOnly="True"
+                 IsReadOnlyCaretVisible="True"
+                 Grid.Row="2" />
+    </Grid>
+</UserControl>

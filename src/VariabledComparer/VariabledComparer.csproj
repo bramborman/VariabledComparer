@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+
+    <Version>0.1.2</Version>
+    <Authors>Marian Dolinský</Authors>
+    <Copyright>© $([System.DateTime]::UtcNow.Year) $(Authors)</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.Windows.Controls" />
+  </ItemGroup>
+
+</Project>
