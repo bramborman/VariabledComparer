@@ -1,5 +1,5 @@
-﻿using System.Timers;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Threading;
 using Microsoft.Win32;
 
 namespace VariabledComparer;
@@ -7,30 +7,24 @@ namespace VariabledComparer;
 public sealed partial class MainWindow : Window
 {
     private readonly HashSet<Tab> _tabs = new();
-    private readonly System.Timers.Timer _recompareDebouncer = new(200);
-    private readonly object _recompareDebouncerLock = new();
+    private readonly DispatcherTimer _recompareDebouncer = new() { Interval = TimeSpan.FromMilliseconds(200) };
 
     public MainWindow()
     {
         InitializeComponent();
         Title += " v" + App.InformationalVersion;
-        _recompareDebouncer.Elapsed += Recompare;
+        _recompareDebouncer.Tick += Recompare;
     }
 
-    private void Recompare(object? sender, ElapsedEventArgs e)
+    private void Recompare(object? sender, EventArgs e)
     {
-        lock (_recompareDebouncerLock)
-        {
-            _recompareDebouncer.Stop();
-        }
+        _recompareDebouncer.Stop();
 
-        Dispatcher.Invoke(() =>
+        string text = TestInput.Text;
+        foreach (Tab tab in _tabs)
         {
-            foreach (Tab tab in _tabs)
-            {
-                tab.Compare(TestInput.Text);
-            }
-        });
+            tab.Compare(text);
+        }
     }
 
     private void AddButtonClicked(object sender, RoutedEventArgs e)
@@ -58,10 +52,7 @@ public sealed partial class MainWindow : Window
 
     private void ResetRecompareDebouncer(object sender, TextChangedEventArgs e)
     {
-        lock (_recompareDebouncerLock)
-        {
-            _recompareDebouncer.Stop();
-            _recompareDebouncer.Start();
-        }
+        _recompareDebouncer.Stop();
+        _recompareDebouncer.Start();
     }
 }
