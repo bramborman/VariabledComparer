@@ -29,25 +29,33 @@ public sealed partial class MainWindow : Window
 
     private void AddButtonClicked(object sender, RoutedEventArgs e)
     {
-        OpenFileDialog ofd = new();
+        OpenFileDialog ofd = new()
+        {
+            Multiselect = true,
+            ShowReadOnly = true,
+        };
 
         if (ofd.ShowDialog(this) != true)
         {
             return;
         }
 
-        GridSplitter splitter = new();
-        Grid.SetColumn(splitter, ContentGrid.ColumnDefinitions.Count - 1);
-        ContentGrid.Children.Add(splitter);
+        foreach (string path in ofd.FileNames)
+        {
+            GridSplitter splitter = new();
+            Grid.SetColumn(splitter, ContentGrid.ColumnDefinitions.Count - 1);
+            ContentGrid.Children.Add(splitter);
 
-        ContentGrid.ColumnDefinitions.Add(new ColumnDefinition());
-        Tab tab = new(ofd.FileName);
-        Grid.SetColumn(tab, ContentGrid.ColumnDefinitions.Count - 1);
+            ContentGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            Tab tab = new(path);
+            Grid.SetColumn(tab, ContentGrid.ColumnDefinitions.Count - 1);
+            ContentGrid.Children.Add(tab);
+
+            _tabs.Add(tab);
+            tab.Compare(TestInput.Text);
+        }
+
         Grid.SetColumnSpan(BottomBarGrid, ContentGrid.ColumnDefinitions.Count);
-        ContentGrid.Children.Add(tab);
-
-        _tabs.Add(tab);
-        tab.Compare(TestInput.Text);
     }
 
     private void ResetRecompareDebouncer(object sender, TextChangedEventArgs e)
