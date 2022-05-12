@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 
-    <Version>0.1.2</Version>
+    <Version>0.1.3</Version>
     <Authors>Marian Dolinský</Authors>
     <Copyright>© $([System.DateTime]::UtcNow.Year) $(Authors)</Copyright>
   </PropertyGroup>
